@@ -29,6 +29,7 @@ import java.net.URL;
 
 public class MedicoFragment extends Fragment {
 
+    // Declaración de los objetos que vamos a manipular en la vista: XML
     private MedicoViewModel mViewModel;
     private EditText clave;
     private EditText nombre;
@@ -46,9 +47,10 @@ public class MedicoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        // Se declara un objeto view, para controlar la vista y todos los elementos que posee
         View view = inflater.inflate(R.layout.fragment_medico, container, false);
 
-
+        // Se relacionan los objetos de la vista, con los objetos de la presente clase
         clave = (EditText)view.findViewById(R.id.editClave);
         nombre = (EditText)view.findViewById(R.id.editNombre);
         aPaterno = (EditText)view.findViewById(R.id.editA_Paterno);
@@ -58,21 +60,14 @@ public class MedicoFragment extends Fragment {
         editar = (Button)view.findViewById(R.id.editar);
         remover = (Button)view.findViewById(R.id.remover);
 
-
+        // Agrega un listener al botón de agregar, para al darle clic, el botón reaccione y ejecute el código
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-
                 String nombreString = nombre.getText().toString();
-
-
-
                 formJson();
-
                 Toast.makeText(getContext(), "Agregando " + nombreString, Toast.LENGTH_LONG).show();
-
 
             }
         });
@@ -87,6 +82,7 @@ public class MedicoFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    // Método para convertir en JSON los datos que se capturan desde la vista
     private void formJson(){
         // Se incluye librería JSONObject
         JSONObject jo = new JSONObject();
@@ -95,6 +91,7 @@ public class MedicoFragment extends Fragment {
         // Lado izquierdo es la key, derecho es el value
         try {
 
+            // Formar el objeto JSON, con los datos
             jo.put("id", 0); // 0, el campo de la tabla es autoincrement
             jo.put("codigo", clave.getText().toString());
             jo.put("nombre", nombre.getText().toString());
@@ -105,9 +102,8 @@ public class MedicoFragment extends Fragment {
             String url = "http://192.168.1.67:8080/medico/create"; // <- Es el método add que está en el RestController
             // La dirección ip, es la del servidor
 
+            // Se llama al método, para enviar los datos al servidor
             postJsonObject(url, jo);
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();
