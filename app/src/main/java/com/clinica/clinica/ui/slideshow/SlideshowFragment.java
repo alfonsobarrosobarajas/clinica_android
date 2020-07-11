@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.clinica.clinica.R;
@@ -30,13 +27,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-
 public class SlideshowFragment extends Fragment {
 
     private SlideshowViewModel slideshowViewModel;
     private ListView listView;
-
+    ArrayAdapter<String> arrayAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,9 +41,14 @@ public class SlideshowFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_slideshow, container, false);
         listView = (ListView)view.findViewById(R.id.listView);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getContext(), arrayAdapter.getItem(i).toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
         downloadJson("http://192.168.1.67:8080/medico/list");
-
-
 
         return view;
     }
@@ -141,11 +141,9 @@ public class SlideshowFragment extends Fragment {
 
         }
 
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,stocks);
+        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,stocks);
         listView.setAdapter(arrayAdapter);
 
     }
-
 
 }

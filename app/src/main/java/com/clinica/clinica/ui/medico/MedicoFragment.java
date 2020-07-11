@@ -1,19 +1,17 @@
 package com.clinica.clinica.ui.medico;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.clinica.clinica.R;
 
@@ -139,10 +137,10 @@ public class MedicoFragment extends Fragment {
 
             OutputStream out = new BufferedOutputStream(conn.getOutputStream());
 
-            // BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
 
-            // writer.write(jsonObject.toString());
-            // writer.close();
+            writer.write(jsonObject.toString());
+            writer.close();
             out.close();
 
         } catch (MalformedURLException e) {
