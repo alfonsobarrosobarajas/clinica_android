@@ -29,9 +29,12 @@ import java.net.URL;
 
 public class SlideshowFragment extends Fragment {
 
+    // Elementos para relacionar de la vista con la presente clase
     private SlideshowViewModel slideshowViewModel;
     private ListView listView;
-    ArrayAdapter<String> arrayAdapter;
+
+    // Adaptador para contener una lista de objetos String y mostrarlos en el listado de la vista
+    private ArrayAdapter<String> arrayAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,12 +42,19 @@ public class SlideshowFragment extends Fragment {
         slideshowViewModel =
                 ViewModelProviders.of(this).get(SlideshowViewModel.class);
         View view = inflater.inflate(R.layout.fragment_slideshow, container, false);
+
+        // Relacionamos el listado de la vista con la lista de la presente clase para poder manipularla
         listView = (ListView)view.findViewById(R.id.listView);
 
+
+        // Se agrega lístener al listado, para reaccionar al darle click sobre un elemento
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                // Lanzar un mensaje con el contenido el Item
                 Toast.makeText(getContext(), arrayAdapter.getItem(i).toString(), Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -141,6 +151,7 @@ public class SlideshowFragment extends Fragment {
 
         }
 
+        // Se muestra el arreglo de cadenas de texto en el listado de la vista
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,stocks);
         listView.setAdapter(arrayAdapter);
 
